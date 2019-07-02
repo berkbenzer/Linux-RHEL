@@ -1,0 +1,5 @@
+- hosts: dns
+  tasks:
+    - name: Secondary Dns
+      script: custom/dnsconfig.sh
+      become: true

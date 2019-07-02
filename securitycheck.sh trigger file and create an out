@@ -1,0 +1,7 @@
+#!/bin/bash
+NOW=$(date +'%d.%m.%Y')
+/bin/ansible-playbook -i /tmp/linuxserver.list /etc/ansible/scripts/security.yaml >| /tmp/security.dat
+/bin/cat /tmp/security.dat | grep xyz | awk -F '|' '{ print $2" " $3" " $4" " $5" " $6" " $7" " $8" " $9" " $10" " $11" " $12" " $13" " $14}' | awk -F'\"' '{ print $1 }'  >| /tmp/security.txt 
+cat /tmp/security.txt | awk  '{if ($3) print $0}' |  awk '{print NR  "> " $s}' | sort -n >|   /tmp/securitymail.txt
+cat /tmp/securitymail.txt | mail -r xx@xx.com -s "$NOW Linux Securtiy Check"  xx@xx.com
+

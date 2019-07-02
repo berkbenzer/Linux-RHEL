@@ -1,0 +1,9 @@
+
+#!/bin/bash
+NOW=$(date +'%d.%m.%Y')
+/bin/ansible-playbook -i /tmp/linuxserver.list /etc/ansible/scripts/priv_check.yaml >| /tmp/priv.dat
+
+#/bin/ansible-playbook /etc/ansible/scripts/priv_check.yaml >| /tmp/priv.dat
+/bin/cat /tmp/priv.dat | grep xyz | awk -F '|' '{ print $2";"$3";"$4";"$5}' | awk -F '\"' '{ print $1 }' | awk '{print NR  "> " $s}' | sort -n > /tmp/priv.txt
+
+#cat /tmp/priv.txt | mail -r ansible@xxxx.com.tr -s "$NOW Linux User Privilege Check"  xxxx@xxxx.com
