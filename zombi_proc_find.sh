@@ -1,0 +1,1 @@
+ps auxwww | grep 'Z'
