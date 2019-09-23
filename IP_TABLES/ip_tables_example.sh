@@ -57,6 +57,12 @@ iptables -D INPUT 2
 iptables -F INPUT
 
 
+#SAVE IPTABLES RULES
+
+#You can save all iptables rules
+iptables-save > /etc/sysconfig/iptables
+service iptables save
+
 
 
 
