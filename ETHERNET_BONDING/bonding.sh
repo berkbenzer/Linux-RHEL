@@ -25,3 +25,29 @@ virbr0             fd8fc045-7313-4ec8-8ea0-ec66d4fc981c  bridge    virbr0
 ens192             537a4a97-e164-45ec-9eca-1250151946b7  ethernet  --     
 ens192             76830d6f-8947-4810-adab-42e786fca677  ethernet  --     
 ens224             a1c70741-6cd2-478f-a3b1-d52fa2aba908  ethernet  --
+
+
+:/etc]# cat /proc/net/bonding/bond0 
+Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+
+Bonding Mode: load balancing (round-robin)
+MII Status: up
+MII Polling Interval (ms): 100
+Up Delay (ms): 0
+Down Delay (ms): 0
+
+Slave Interface: ens192
+MII Status: up
+Speed: 10000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:50:56:84:4c:9b
+Slave queue ID: 0
+
+Slave Interface: ens224
+MII Status: up
+Speed: 10000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:50:56:84:3a:10
+Slave queue ID: 0
