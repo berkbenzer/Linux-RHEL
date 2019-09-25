@@ -63,7 +63,10 @@ iptables -F INPUT
 iptables-save > /etc/sysconfig/iptables
 service iptables save
 
+#REDIRECT PORT
 
+#All incoming traficc to port 25 will be redirected to the 2525 port
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 25 -j REDIRECT --to-port 2525
 
 
 
