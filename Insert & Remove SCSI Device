@@ -1,0 +1,21 @@
+[root@morphy01:~]# lsscsi
+[0:0:0:0]    cd/dvd  TEAC     DV-28S-W         C.2D  /dev/sr0
+[4:0:0:0]    disk    HITACHI  OPEN-V           6007  /dev/sda
+[4:0:0:1]    disk    HITACHI  OPEN-V           6007  /dev/sdb
+[4:0:0:2]    disk    HITACHI  OPEN-V           6008  /dev/sdy
+[4:0:0:3]    disk    HITACHI  OPEN-V           6008  /dev/sdz
+[4:0:0:5]    disk    HITACHI  OPEN-V           6007  /dev/sdc
+[4:0:0:6]    disk    HITACHI  OPEN-V           6007  /dev/sdd
+[4:0:0:7]    disk    HITACHI  OPEN-V           6007  /dev/sde
+
+/dev/sdb is going to remove
+
+echo "scsi remove-single-device 4 0 0 1" > /proc/scsi/scsi
+
+adding new device;
+
+echo "scsi add-single-device 4 0 0 1" > /proc/scsi/scsi
+
+a == hostadapter id (first one being 0) b == SCSI channel on hostadapter (first one being 0) c == ID d == LUN (first one being 0)
+
+lsscsi  | awk '/EMC/{print $1}' | tr -d '[]'  | awk -F':' '{print "echo \"scsi remove-single-device",$1,$2,$3,$4"\" > /proc/scsi/scsi"}' | bash
