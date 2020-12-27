@@ -15,7 +15,8 @@ hammer gpg create --organization-id 3 \
   --name "RPM-GPG-KEY-CentOS-8"
 
 
-   hammer repository create --organization-id 3 \   --product "CentOS 8 Linux for x86_64" \   --name "CentOS 8 Base RPMS" \   --label "CentOS_8_Base_RPMS" \   --content-type "yum" \  --download-policy "on_demand" \   --gpg-key "RPM-GPG-KEY-CentOS-8" \   --url "http://centos.mirror.liquidtelecom.com/8/BaseOS/x86_64/os/" \   --mirror-on-sync "no" 
+   hammer repository create --organization-id 3    --product "CentOS 8 Linux for x86_64"    --name "CentOS 8 Base RPMS"    --label "CentOS_8_Base_RPMS"    --content-type "yum"   --download-policy "on_demand"    --gpg-key "RPM-GPG-KEY-CentOS-8"    --url "http://centos.mirror.liquidtelecom.com/8/BaseOS/x86_64/os/"    --mirror-on-sync "no" 
+
 
 
    hammer repository create --organization-id 3 \   
