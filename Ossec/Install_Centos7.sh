@@ -5,6 +5,7 @@ systemctl start httpd
 systemctl enable httpd
 
 yum install -y gcc php php-cgi php-devel inotify-tools httpd mysql-devel postgresql-devel
+init 6
 git clone https://github.com/ossec/ossec-hids.git
 cd ossec-hids/
 
