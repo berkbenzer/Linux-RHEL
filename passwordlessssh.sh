@@ -8,7 +8,7 @@ Enter same passphrase again:
 Your identification has been saved in /root/.ssh/id_rsa.
 Your public key has been saved in /root/.ssh/id_rsa.pub.
 The key fingerprint is:
-SHA256:CIJwPEOs/UH5eHh74CZQpggAeEigXjbU9nd81kx6JdA root@rheltest
+SHA256: root@rheltest
 The key's randomart image is:
 
 [root@rheltest:~]# ssh-copy-id bbenzer@satellite
