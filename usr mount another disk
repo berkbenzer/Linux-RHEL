@@ -1,0 +1,28 @@
+linux /vmlinuz-5.4.0-81-generic root=/dev/sda1 ro quiet splash
+linux /vmlinuz-5.4.0-81-generic root=/dev/sda1 ro quiet splash single   CTRL+X
+linux /vmlinuz-5.4.0-81-generic root=/dev/sda1 ro quiet splash emergency
+mount -o remount,rw /dev/sdXN /usr
+mount -o remount,noatime /mnt/myfilesystem
+mkdir /sysroot
+
+
+
+
+
+when you change the name of user directory from /usr /usr_backup machine become useless
+
+in order to solve this need to login with single user mode
+
+
+linux /vmlinuz-5.4.0-81-generic root=/dev/sda1 ro quiet splash single   CTRL+X
+
+umount /dev/sda4 <<<<< OS will be unmount
+mkdir /mnt/sysroot
+mount /dev/sda4 /mnt/sysroot
+mv /mnt/sysroot/usr_backup /mnt/sysroot/usr
+umount /mnt/sysroot
+reboot
+
+
+
+
