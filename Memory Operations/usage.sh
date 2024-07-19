@@ -11,3 +11,8 @@ ists075pmsdbt ~]$ ./mem_usa.sh
 Memory Usage: 41942/42339MB (99.06%)
 Disk Usage: 19/83GB (24%)
 CPU Load: 2.23
+
+
+ps aux --sort -pmem
+
+ top -o mem
