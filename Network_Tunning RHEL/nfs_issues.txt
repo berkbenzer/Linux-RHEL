@@ -1,0 +1,67 @@
+cHECK CONNECTIONS AND RECE
+ss -tan | grep 2049
+LISTEN     0      64           *:2049                     *:*
+SYN-RECV   0      0      NFS_SERVER_IP%if405542586:2049              nfs_client:853   >>>>>>>>>>>>>>>>>>>>>>>>>>>ACK packet never arrived session hang
+ESTAB      0      0      NFS_SERVER_IP:2049              nfs_client:813
+LISTEN     0      64          :::2049         
+
+##############################################
+Take TCP dump from nfs server to nfs client
+
+ tcpdump -i bond0 -nn port 2049 and hostnfs_client -c 100
+listening on bond0, link-type EN10MB (Ethernet), capture size 262144 bytes
+16:09:08.403210 IPnfs_client.853 > NFS_SERVER_IP.2049: Flags [S], seq 1796628145, win 29200, options [mss 1460,sackOK,TS val 2981422720 ecr 0,nop,wscale 9], length 0
+16:09:08.403224 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172573626 ecr 2981422720,nop,wscale 9], length 0
+16:09:09.405312 IPnfs_client.853 > NFS_SERVER_IP.2049: Flags [S], seq 1796628145, win 29200, options [mss 1460,sackOK,TS val 2981423722 ecr 0,nop,wscale 9], length 0
+16:09:09.405321 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172574628 ecr 2981422720,nop,wscale 9], length 0
+16:09:10.404903 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172575628 ecr 2981422720,nop,wscale 9], length 0
+16:09:11.411181 IPnfs_client.853 > NFS_SERVER_IP.2049: Flags [S], seq 1796628145, win 29200, options [mss 1460,sackOK,TS val 2981425728 ecr 0,nop,wscale 9], length 0
+16:09:11.411195 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172576634 ecr 2981422720,nop,wscale 9], length 0
+16:09:13.804901 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172579028 ecr 2981422720,nop,wscale 9], length 0
+16:09:15.419129 IPnfs_client.853 > NFS_SERVER_IP.2049: Flags [S], seq 1796628145, win 29200, options [mss 1460,sackOK,TS val 2981429736 ecr 0,nop,wscale 9], length 0
+16:09:15.419149 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172580642 ecr 2981422720,nop,wscale 9], length 0
+16:09:19.604900 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172584828 ecr 2981422720,nop,wscale 9], length 0
+16:09:23.443169 IPnfs_client.853 > NFS_SERVER_IP.2049: Flags [S], seq 1796628145, win 29200, options [mss 1460,sackOK,TS val 2981437760 ecr 0,nop,wscale 9], length 0
+16:09:23.443188 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172588666 ecr 2981422720,nop,wscale 9], length 0
+16:09:31.804953 IP NFS_SERVER_IP.2049 >nfs_client.853: Flags [S.], seq 143112682, ack 1796628146, win 28960, options [mss 1460,sackOK,TS val 1172597028 ecr 2981422720,nop,wscale 9], length 0
+16:09:38.483132 IPnfs_client.813 > NFS_SERVER_IP.2049: Flags [P.], seq 3298631739:3298631835, ack 738455735, win 356, options [nop,nop,TS val 2981452800 ecr 1172565247], length 96: NFS request xid 505826288 92 getattr [|nfs]
+16:09:38.483172 IP NFS_SERVER_IP.2049 >nfs_client.813: Flags [P.], seq 1:49, ack 96, win 358, options [nop,nop,TS val 1172603706 ecr 2981452800], length 48: NFS reply xid 505826288 reply ok 44 getattr [|nfs]
+16:09:38.483482 IPnfs_client.813 > NFS_SERVER_IP.2049: Flags [.], ack 49, win 356, options [nop,nop,TS val 2981452800 ecr 1172603706], length 0   >>>>>>>>>>>>>>>>>>>>>>> First ack Packet arrivail. seems network issue
+
+##########################################
+nfs thread check
+cat /proc/fs/nfsd/pool_stats
+
+
+
+
+###################################################
+netstat -s | grep -i retrans
+    17331846 segments retransmited
+    TCPLostRetransmit: 527
+    12524903 fast retransmits
+    549689 forward retransmits
+    1333262 retransmits in slow start
+    213270 SACK retransmits failed
+    TCPRetransFail: 16
+    TCPSynRetrans: 30138
+
+
+17.3 million retransmitted segments → This is a sign of severe network instability.
+12.5 million fast retransmits → TCP quickly resending lost packets.
+549K forward retransmits → The server is reattempting to send lost packets.
+1.3 million retransmits in slow start → Indicates congestion, as TCP retransmits aggressively in slow start.
+213K SACK retransmits failed → The Selective Acknowledgment (SACK) feature isn't recovering well from packet loss.
+30K SYN retransmits → Indicates that new connections are timing out and being retried.
+
+
+#######################
+TCP SYSCTL CONF CAN BE TUNED
+
+sysctl -w net.core.rmem_default=1048576
+sysctl -w net.core.wmem_default=1048576
+sysctl -w net.ipv4.tcp_rmem='4096 87380 33554432'
+sysctl -w net.ipv4.tcp_wmem='4096 16384 33554432'
+sysctl -w net.core.optmem_max=25165824
+sysctl -w net.core.netdev_max_backlog=5000
+sysctl -w net.ipv4.tcp_congestion_control=bbr
