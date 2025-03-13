@@ -33,6 +33,7 @@ nfs thread check
 cat /proc/fs/nfsd/pool_stats
 
 
+echo 32 > /proc/fs/nfsd/threads
 
 
 ###################################################
@@ -65,3 +66,14 @@ sysctl -w net.ipv4.tcp_wmem='4096 16384 33554432'
 sysctl -w net.core.optmem_max=25165824
 sysctl -w net.core.netdev_max_backlog=5000
 sysctl -w net.ipv4.tcp_congestion_control=bbr
+
+
+#########################
+Reduce Retrasnmission
+
+net.ipv4.tcp_retries2=10              Default is 15, but 10 is a good balance between reliability and avoiding premature retransmissions.
+net.ipv4.tcp_frto=0                   revents TCP from assuming packet loss too quickly.
+net.ipv4.tcp_slow_start_after_idle=0  Prevents TCP from reducing the sending rate when idle for some time.
+
+
+
