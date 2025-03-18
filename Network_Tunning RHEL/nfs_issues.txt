@@ -76,4 +76,10 @@ net.ipv4.tcp_frto=0                   revents TCP from assuming packet loss too 
 net.ipv4.tcp_slow_start_after_idle=0  Prevents TCP from reducing the sending rate when idle for some time.
 
 
+##########################
+After Checks
+
+ps -ef | grep df ####hang processes
+
+kill -9 $(pidof df)
 
