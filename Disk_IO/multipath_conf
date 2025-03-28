@@ -31,6 +31,11 @@ multipath -ll 100G01 | grep policy
 
 
 
+
+for host in /sys/class/scsi_host/host*; do echo "- - -" > $host/scan; done
+
+
+
 systool -c fc_host -v | grep port_name
     port_name           = "0x100000620b417e0c"
     port_name           = "0x100000620b417e0d"
