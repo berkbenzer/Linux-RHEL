@@ -28,3 +28,13 @@ multipaths {
  for alias in 100G01 100G02 100G03 100G04; do   echo "select $alias round-robin 0" | multipathd -k; done
  
 multipath -ll 100G01 | grep policy
+
+
+
+systool -c fc_host -v | grep port_name
+    port_name           = "0x100000620b417e0c"
+    port_name           = "0x100000620b417e0d"
+    port_name           = "0x100000620b417dd2"
+    port_name           = "0x100000620b417dd3"
+    port_name           = "0x100000620b417e03"
+    port_name           = "0x100000620b417e04"
