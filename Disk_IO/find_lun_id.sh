@@ -38,7 +38,7 @@ for dev in $(ls /sys/block | grep '^sd[a-z]$'); do
 
   # WWID
   wwid=$(sg_inq --page=0x83 /dev/$dev 2>/dev/null | grep -Eo '0x[0-9a-f]{32,}')
-  echo "    ↪ WWID (NAA): $wwid"
+  echo "WWID (NAA): $wwid"
   echo ""
 done
 
