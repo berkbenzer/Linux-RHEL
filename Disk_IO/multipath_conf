@@ -1,0 +1,30 @@
+##### Add round robin conf to multipath
+
+multipaths {
+       multipath {
+               wwid   360000970000420000215533030353532
+               alias  100G01
+               path_selector "round-robin 0"   
+       }
+       multipath {
+               wwid   360000970000420000215533030353533
+               alias  100G02
+               path_selector "round-robin 0"
+       }
+       multipath {
+               wwid   360000970000420000215533030353534
+               alias  100G03
+               path_selector "round-robin 0"
+       }
+       multipath {
+               wwid   360000970000420000215533030353535
+               alias  100G04
+               path_selector "round-robin 0"
+       }
+}
+
+####apply without rebooting
+ multipathd -k "reconfigure"
+ for alias in 100G01 100G02 100G03 100G04; do   echo "select $alias round-robin 0" | multipathd -k; done
+ 
+multipath -ll 100G01 | grep policy
